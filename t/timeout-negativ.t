@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test::More tests => 1;
 use Timeout::Queue;
 
 # Fake timer 
@@ -15,12 +15,7 @@ $timeouts->queue(
   }
 );
 
-is($timeouts->timeout(), 1, "Timeout was correct");
-
 # Fake sleep for 1 sec
-$time += 1;
+$time += 2;
 
-foreach my $item ($timeouts->handle()) {
-  $item->{callme}->();
-}
-
+is($timeouts->timeout(), 0, "Timeout was correct");

@@ -14,6 +14,7 @@ my $builder = Module::Build->new(
     },
     add_to_cleanup => [ 
         'Timeout-Queue-*',
+        'Makefile',
         'blib',
     ],
 );

@@ -105,10 +105,10 @@ METHODS
 
         Returns the next timeout.
 
-    handle_timeout(\@timeouts, \$timeout)
+    handle_timeout(\@timeouts, time())
         Returns all the items that have timed out so far.
 
-    get_timeout(\@timeouts)
+    get_timeout(\@timeouts, time())
         Return the next timeout on the queue or undef if it's empty.
 
 AUTHOR

@@ -2,7 +2,7 @@ package Timeout::Queue;
 use strict;
 use warnings;
 
-our $VERSION = '1.00';
+our $VERSION = '1.02';
 
 =head1 NAME
 
@@ -78,7 +78,6 @@ shifting off when it is posible.
 use base "Exporter";
 
 our @EXPORT_OK = qw(queue_timeout delete_timeout handle_timeout get_timeout);
-
 
 =item new()
 
@@ -266,7 +265,7 @@ sub delete_timeout {
 }
 
 
-=item handle_timeout(\@timeouts, \$timeout)
+=item handle_timeout(\@timeouts, time())
 
 Returns all the items that have timed out so far. 
 
@@ -293,7 +292,7 @@ sub handle_timeout {
     return @items;
 }
 
-=item get_timeout(\@timeouts)
+=item get_timeout(\@timeouts, time())
 
 Return the next timeout on the queue or undef if it's empty.
 
@@ -303,7 +302,8 @@ sub get_timeout {
     my ($timeouts, $time) = @_;
 
     if(@{$timeouts} > 0) {
-        return ($timeouts->[0]{expires}-$time);
+        my $timeout = ($timeouts->[0]{expires}-$time);
+        return $timeout >= 0 ? $timeout : 0;
     } else {
         return;
     }
